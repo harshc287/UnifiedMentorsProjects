@@ -1,0 +1,307 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive World Map Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .map-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .world-map {
+            width: 100%;
+            height: 500px;
+            cursor: pointer;
+        }
+        
+        .country {
+            fill: #4d8cff;
+            stroke: #fff;
+            stroke-width: 0.5;
+            transition: all 0.3s ease;
+        }
+        
+        .country:hover {
+            fill: #ffcc00;
+            stroke-width: 1;
+        }
+        
+        .info-panel {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            min-height: 200px;
+        }
+        
+        .info-title {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .info-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+        }
+        
+        .info-flag {
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .info-details {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .info-details p {
+            margin-bottom: 10px;
+        }
+        
+        .highlight {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .instructions {
+            text-align: center;
+            color: white;
+            margin-top: 20px;
+            font-size: 1.1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .info-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .world-map {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>World Explorer</h1>
+            <p class="subtitle">Click on any country to learn more about it</p>
+        </header>
+        
+        <div class="map-container">
+            <svg class="world-map" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+                <!-- Simplified versions of country shapes -->
+                <path id="usa" class="country" d="M180,200 Q200,180 220,200 Q240,220 260,210 Q280,220 290,200 Q310,190 300,170 Q280,160 270,140 Q250,130 240,150 Q220,160 200,150 Q190,170 180,200Z" />
+                <path id="brazil" class="country" d="M300,300 Q320,280 340,300 Q360,320 380,310 Q400,330 390,350 Q370,370 350,360 Q330,350 310,370 Q290,350 300,300Z" />
+                <path id="uk" class="country" d="M480,150 Q500,140 510,160 Q520,180 500,190 Q480,200 470,180 Q460,160 480,150Z" />
+                <path id="france" class="country" d="M500,180 Q520,170 530,190 Q540,210 520,220 Q500,230 490,210 Q480,190 500,180Z" />
+                <path id="germany" class="country" d="M530,170 Q550,160 560,180 Q570,200 550,210 Q530,220 520,200 Q510,180 530,170Z" />
+                <path id="spain" class="country" d="M480,200 Q500,190 510,210 Q520,230 500,240 Q480,250 470,230 Q460,210 480,200Z" />
+                <path id="italy" class="country" d="M540,200 Q560,190 560,210 Q560,230 550,240 Q530,250 530,230 Q530,210 540,200Z" />
+                <path id="egypt" class="country" d="M570,220 Q590,210 600,230 Q610,250 590,260 Q570,270 560,250 Q550,230 570,220Z" />
+                <path id="india" class="country" d="M650,220 Q670,210 680,230 Q690,250 670,260 Q650,270 640,250 Q630,230 650,220Z" />
+                <path id="china" class="country" d="M720,180 Q740,170 750,190 Q760,210 740,220 Q720,230 710,210 Q700,190 720,180Z" />
+                <path id="japan" class="country" d="M820,200 Q840,190 850,210 Q860,230 840,240 Q820,250 810,230 Q800,210 820,200Z" />
+                <path id="australia" class="country" d="M800,350 Q820,340 830,360 Q840,380 820,390 Q800,400 790,380 Q780,360 800,350Z" />
+                <path id="south-africa" class="country" d="M550,350 Q570,340 580,360 Q590,380 570,390 Q550,400 540,380 Q530,360 550,350Z" />
+                <path id="mexico" class="country" d="M150,250 Q170,240 180,260 Q190,280 170,290 Q150,300 140,280 Q130,260 150,250Z" />
+                <path id="canada" class="country" d="M180,120 Q200,110 210,130 Q220,150 200,160 Q180,170 170,150 Q160,130 180,120Z" />
+                <path id="argentina" class="country" d="M300,350 Q320,340 330,360 Q340,380 320,390 Q300,400 290,380 Q280,360 300,350Z" />
+            </svg>
+        </div>
+        
+        <div class="info-panel">
+            <h2 class="info-title">Select a country to learn more</h2>
+            <div class="info-content">
+                <div class="info-flag-container">
+                    <img id="country-flag" class="info-flag" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2RkZCIvPjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIGZpbGw9IiM2NjYiPkZsYWcgd2lsbCBhcHBlYXIgaGVyZTwvdGV4dD48L3N2Zz4=" alt="Country Flag">
+                </div>
+                <div id="country-info" class="info-details">
+                    <p>Click on any country to see information about it including population, capital city, language, and interesting facts.</p>
+                </div>
+            </div>
+        </div>
+        
+        <p class="instructions">This is a simplified demonstration. In a real application, you would use a detailed SVG world map.</p>
+    </div>
+
+    <script>
+        // Country data
+        const countryData = {
+            'usa': {
+                name: 'United States of America',
+                capital: 'Washington, D.C.',
+                population: '331 million',
+                language: 'English',
+                fact: 'The USA has the world\'s largest economy by nominal GDP.',
+                flag: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzAyMjE2OSIvPjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iNDAiIGZpbGw9IiJzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMiIvPjxyZWN0IHk9IjQwIiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjYjMzMzM5Ii8+PHJlY3QgeT0iODAiIHdpZHRoPSIzMDAiIGhlaWdodD0iNDAiIGZpbGw9IiNmZmYiLz48cmVjdCB5PSIxMjAiIHdpZHRoPSIzMDAiIGhlaWdodD0iNDAiIGZpbGw9IiNiMzMzMzkiLz48cmVjdCB5PSIxNjAiIHdpZHRoPSIzMDAiIGhlaWdodD0iNDAiIGZpbGw9IiNmZmYiLz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzAyMjE2OSIvPjxwYXRoIGQ9Ik0xMCwxMCBMMTEwLDEwIEwxMTAsMTEwIEwxMCwxMTAgTjEwLDEwIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMiIvPjxjaXJjbGUgY3g9IjYwIiBjeT0iNjAiIHI9IjMwIiBmaWxsPSIjYjMzMzM5Ii8+PC9zdmc+'
+            },
+            'brazil': {
+                name: 'Brazil',
+                capital: 'Brasília',
+                population: '213 million',
+                language: 'Portuguese',
+                fact: 'Brazil is the largest country in South America and the fifth largest in the world.',
+                flag: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzAwODc1MyIvPjxwYXRoIGQ9Ik0xNTAsNTAgQzEwMCw1MCA2MCw4MCA2MCwxMDAgQzYwLDEyMCAxMDAsMTUwIDE1MCwxNTAgQzIwMCwxNTAgMjQwLDEyMCAyNDAsMTAwIEMyNDAsODAgMjAwLDUwIDE1MCw1MFoiIGZpbGw9IiNmZmYiLz48Y2lyY2xlIGN4PSIxNTAiIGN5PSIxMDAiIHI9IjMwIiBmaWxsPSIjMDA4NzUzIi8+PHBhdGggZD0iTTEzMCw5MCBMMTQwLDgwIEwxNTAsOTAgTDE2MCw4MCBMMTcwLDkwIEwxNjAsMTAwIEwxNzAsMTEwIEwxNjAsMTIwIEwxNTAsMTEwIEwxNDAsMTIwIEwxMzAsMTEwIEwxNDAsMTAwIEwxMzAsOTBaIiBmaWxsPSIjZmYwIi8+PC9zdmc+'
+            },
+            'uk': {
+                name: 'United Kingdom',
+                capital: 'London',
+                population: '67 million',
+                language: 'English',
+                fact: 'The UK consists of four countries: England, Scotland, Wales, and Northern Ireland.',
+                flag: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzAwMjQ3MSIvPjxwYXRoIGQ9Ik0wLDAgTDMwMCwyMDAgTTMwMCwwIEwwLDIwMCIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjQwIi8+PHBhdGggZD0iTTE1MCwwIEwxNTAsMjAwIE0wLDEwMCBMMzAwLDEwMCIgc3Ryb2tlPSIjYzYwMDA2IiBzdHJva2Utd2lkdGg9IjQwIi8+PHBhdGggZD0iTTAsMCBMMzAwLDIwMCBNMzAwLDAgTDAsMjAwIiBzdHJva2U9IiNjNjAwMDYiIHN0cm9rZS13aWR0aD0iMjUiLz48L3N2Zz4='
+            },
+            'france': {
+                name: 'France',
+                capital: 'Paris',
+                population: '67 million',
+                language: 'French',
+                fact: 'France is the most visited country in the world, with over 89 million tourists annually.',
+                flag: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzAwNTFiNCIvPjxyZWN0IHg9IjEwMCIgeT0iMCIgd2lkdGg9IjEwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiNmZmYiLz48cmVjdCB4PSIyMDAiIHk9IjAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjY2QwMDE1Ii8+PC9zdmc+'
+            },
+            'germany': {
+                name: 'Germany',
+                capital: 'Berlin',
+                population: '83 million',
+                language: 'German',
+                fact: 'Germany has the largest economy in Europe and is known for its engineering and automobile industry.',
+                flag: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjY2LjciIGZpbGw9IiMwMDAiLz48cmVjdCB5PSI2Ni43IiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjY2LjciIGZpbGw9IiNkZTAwMDAiLz48cmVjdCB5PSIxMzMuMyIgd2lkdGg9IjMwMCIgaGVpZ2h0PSI2Ni43IiBmaWxsPSIjZmZjMDAwIi8+PC9zdmc+'
+            },
+            'spain': {
+                name: 'Spain',
+                capital: 'Madrid',
+                population: '47 million',
+                language: 'Spanish',
+                fact: 'Spain has the second highest number of UNESCO World Heritage Sites after Italy.',
+                flag: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjUwIiBmaWxsPSIjYTAwIi8+PHJlY3QgeT0iNTAiIHdpZHRoPSIzMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjZmZjMTAwIi8+PHJlY3QgeT0iMTUwIiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjUwIiBmaWxsPSIjYTAwIi8+PHJlY3QgeD0iMTEwIiB5PSI3MCIgd2lkdGg9IjgwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjZmZjMTAwIi8+PHJlY3QgeD0iMTE1IiB5PSI3NSIgd2lkdGg9IjcwIiBoZWlnaHQ9IjUwIiBmaWxsPSIjYTAwIi8+PC9zdmc+'
+            },
+            'italy': {
+                name: 'Italy',
+                capital: 'Rome',
+                population: '60 million',
+                language: 'Italian',
+                fact: 'Italy is home to the most UNESCO World Heritage Sites in the world.',
+                flag: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzAwOTI0NiIvPjxyZWN0IHg9IjEwMCIgeT0iMCIgd2lkdGg9IjEwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiNmZmYiLz48cmVjdCB4PSIyMDAiIHk9IjAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjY2QwMDE1Ii8+PC9zdmc+'
+            },
+            'egypt': {
+                name: 'Egypt',
+                capital: 'Cairo',
+                population: '104 million',
+                language: 'Arabic',
+                fact: 'Egypt is home to the only remaining ancient wonder of the world: The Great Pyramid of Giza.',
+                flag: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjY2LjciIGZpbGw9IiNjMDkyMzYiLz48cmVjdCB5PSI2Ni43IiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjY2LjciIGZpbGw9IiNmZmYiLz48cmVjdCB5PSIxMzMuMyIgd2lkdGg9IjMwMCIgaGVpZ2h0PSI2Ni43IiBmaWxsPSIjYzA5MjM2Ii8+PHJlY3QgeD0iMTIwIiB5PSI3MCIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjYzA5MjM2Ii8+PC9zdmc+'
+            },
+            'india': {
+                name: 'India',
+                capital: 'New Delhi',
+                population: '1.38 billion',
+                language: 'Hindi, English',
+                fact: 'India is the world\'s largest democracy and the second most populous country.',
+                flag: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjY2LjciIGZpbGw9IiNmZjkyODciLz48cmVjdCB5PSI2Ni43IiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjY2LjciIGZpbGw9IiNmZmYiLz48cmVjdCB5PSIxMzMuMyIgd2lkdGg9IjMwMCIgaGVpZ2h0PSI2Ni43IiBmaWxsPSIjMTg4NzM2Ii8+PGNpcmNsZSBjeD0iMTUwIiBjeT0iMTAwIiByPSIyMCIgZmlsbD0iIzAwMCIvPjxjaXJjbGUgY3g9IjE1MCIgY3k9IjEwMCIgcj0iMTYiIGZpbGw9IiMwMDg3YjQiLz48Y2lyY2xlIGN4PSIxNjAiIGN5PSI5MCIgcj0iNCIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg=='
+            },
+            'china': {
+                name: 'China',
+                capital: 'Beijing',
+                population: '1.4 billion',
+                language: 'Mandarin',
+                fact: 'China is the most populous country in the world and has the second largest economy.',
+                flag: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2RlMjkxMCIvPjxjaXJjbGUgY3g9IjEwMCIgY3k9IjEwMCIgcj0iMzAiIGZpbGw9IiNmZmYiLz48cGF0aCBkPSJNNzAsOTAgTDkwLDkwIEw5MCw3MCBMMTEwLDcwIEwxMTAsOTAgTDEzMCw5MCBMMTMwLDExMCBMMTEwLDExMCBMMTEwLDEzMCBMOTAsMTMwIEw5MCwxMTAgTDcwLDExMCBMNzAsOTBaIiBmaWxsPSIjZGUyOTEwIi8+PGNpcmNsZSBjeD0iODAiIGN5PSI4MCIgcj0iNSIgZmlsbD0iI2RlMjkxMCIvPjxjaXJjbGUgY3g9IjEyMCIgY3k9IjgwIiByPSI1IiBmaWxsPSIjZGUyOTEwIi8+PGNpcmNsZSBjeD0iODAiIGN5PSIxMjAiIHI9IjUiIGZpbGw9IiNkZTI5MTAiLz48Y2lyY2xlIGN4PSIxMjAiIGN5PSIxMjAiIHI9IjUiIGZpbGw9IiNkZTI5MTAiLz48L3N2Zz4='
+            },
+            'japan': {
+                name: 'Japan',
+                capital: 'Tokyo',
+                population: '126 million',
+                language: 'Japanese',
+                fact: 'Japan is known as the "Land of the Rising Sun" and has the world\'s third largest economy.',
+                flag: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2ZmZiIvPjxjaXJjbGUgY3g9IjE1MCIgY3k9IjEwMCIgcj0iNDAiIGZpbGw9IiNiYzAwMDAiLz48L3N2Zz4='
+            },
+            'australia': {
+                name: 'Australia',
+                capital: 'Canberra',
+                population: '25 million',
+                language: 'English',
+                fact: 'Australia is both a country and a continent, and it\'s the world\'s largest island.',
+                flag: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzAwMjY3ZSIvPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxNTAiIGhlaWdodD0iODAiIGZpbGw9IiMwMDI2N2UiLz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iODAiIGhlaWdodD0iMTUwIiBmaWxsPSIjMDAyNjdlIi8+PHBhdGggZD0iTTAsMCBMMTUwLDgwIE04MCwxNTAgTDIzMCwyMDAgTDMwMCwwIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNiIvPjxjaXJjbGUgY3g9IjYwIiBjeT0iNjAiIHI9IjE1IiBmaWxsPSIjZmYwIi8+PGNpcmNsZSBjeD0iMjEwIiBjeT0iNDAiIHI9IjEwIiBmaWxsPSIjZmYwIi8+PGNpcmNsZSBjeD0iMTgwIiBjeT0iODAiIHI9IjgiIGZpbGw9IiNmZjAiLz48Y2lyY2xlIGN4PSIyNDAiIGN5PSIxMjAiIHI9IjgiIGZpbGw9IiNmZjAiLz48L3N2Zz4='
+            },
+            'south-africa': {
+                name: 'South Africa',
+                capital: 'Pretoria, Cape Town, Bloemfontein',
+                population: '60 million',
+                language: '11 official languages including Zulu, Xhosa, and Afrikaans',
+                fact: 'South Africa is often called the "Rainbow Nation" due to its diverse cultures.',
+                flag: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj48cGF0aCBkPSJNMCwwIEwzMDAsMCBMMzAwLDIwMCBMMCwyMDAgTDAsMCIgZmlsbD0iI2ZmZiIvPjxwYXRoIGQ9Ik0wLDAgTDE1MCwxMDAgTDAsMjAwIiBmaWxsPSIjMDAwIi8+PHBhdGggZD0iTTMwMCwwIEwxNTAsMTAwIEwzMDAsMjAwIiBmaWxsPSIjZmYwIi8+PHBhdGggZD0iTTAsMCBMMzAwLDAgTDMwMCwyMDAgTDAsMjAwIEwwLDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSI1Ii8+PHBhdGggZD0iTTAsMCBMMzAwLDIwMCBNMzAwLDAgTDAsMjAwIiBzdHJva2U9IiMwMDciIHN0cm9rZS13aWR0aD0iNDAiLz48L3N2Zz4='
+            },
+            'mexico': {
+                name: 'Mexico',
+                capital: 'Mexico City',
+                population: '126 million',
+                language: 'Spanish',
+                fact: 'Mexico introduced chocolate, corn, and chilies to the world.',
+                flag: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzAwMDk2Ii8+PHJlY3QgeD0iMTAwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2ZmZiIvPjxyZWN0IHg9IjIwMCIgd2lkdGg9IjEwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiNjMTAwMDAiLz48cGF0aCBkPSJNMTUwLDgwIEMxMzAsODAgMTEwLDEwMCAxMTAsMTIwIEMxMTAsMTQwIDEzMCwxNjAgMTUwLDE2MCBDMTcwLDE2MCAxOTAsMTQwIDE5MCwxMjAgQzE5MCwxMDAgMTcwLDgwIDE1MCw4MFoiIGZpbGw9IiNjMTAwMDAiLz48cGF0aCBkPSJNMTQwLDEwMCBMMTUwLDkwIEwxNjAsMTAwIEwxNTAsMTEwIEwxNDAsMTAwWiIgZmlsbD0iIzAwMDk2Ii8+PC9zdmc+'
+            },
+            'canada': {
+                name: 'Canada',
+                capital: 'Ottawa',
+                population: '38 million',
+                language: 'English, French',
+                fact: 'Canada has the longest coastline of any country in the world.',
+                flag: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2ZmZiIvPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjZjAwMDAwIi8+PHJlY3QgeD0iMjAwIiB5PSIwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2YwMDAwMCIvPjxwYXRoIGQ9Ik0xNTAsNTAgTDE3MCw3MCBMMTUwLDkwIEwxMzAsNzAgTDE1MCw1MFoiIGZpbGw9IiNmMDAwMDAiLz48cGF0aCBkPSJNMTIwLDgwIEwxODAsODAgTDE4MCwxMjAgTDEyMCwxMjAgTDEyMCw4MFoiIGZpbGw9IiNmMDAwMDAiLz48L3N2Zz4='
+            },
+            'argentina': {
+                name: 'Argentina',
+                capital: 'Buenos Aires',
+                population: '45 million',
+                language: 'Spanish',
+                fact: 'Argentina is the eighth largest country in the world and the largest Spanish-speaking nation.',
+                flag: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcm
+            }
+        }

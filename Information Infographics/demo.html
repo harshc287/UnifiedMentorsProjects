@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Adoption in Industries 2025 - Interactive Infographic</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #1a202c;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 80px 0;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            margin-bottom: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.1), transparent),
+                        radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.1), transparent);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            animation: slideInDown 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            animation: slideInUp 1s ease-out 0.3s both;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #3b82f6;
+            display: block;
+        }
+
+        .hero-stat-label {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .industry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .industry-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .industry-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transition: transform 0.6s ease;
+            transform-origin: left;
+        }
+
+        .industry-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .industry-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.25);
+        }
+
+        .healthcare { --gradient: linear-gradient(90deg, #ef4444, #f97316); }
+        .finance { --gradient: linear-gradient(90deg, #3b82f6, #1d4ed8); }
+        .manufacturing { --gradient: linear-gradient(90deg, #f59e0b, #d97706); }
+        .retail { --gradient: linear-gradient(90deg, #8b5cf6, #7c3aed); }
+        .automotive { --gradient: linear-gradient(90deg, #10b981, #059669); }
+        .education { --gradient: linear-gradient(90deg, #06b6d4, #0891b2); }
+
+        .industry-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .industry-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            background: var(--gradient);
+            margin-right: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .industry-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1a202c;
+        }
+
+        .adoption-rate {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(59, 130, 246, 0.05);
+            border-radius: 15px;
+            border-left: 4px solid var(--gradient);
+        }
+
+        .adoption-percentage {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .adoption-label {
+            font-size: 1rem;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .ai-applications {
+            margin: 25px 0;
+        }
+
+        .applications-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 15px;
+        }
+
+        .application-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .application-item:last-child {
+            border-bottom: none;
+        }
+
+        .app-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 16px;
+        }
+
+        .app-text {
+            flex: 1;
+            font-size: 0.95rem;
+            color: #4b5563;
+            font-weight: 500;
+        }
+
+        .market-overview {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 60px 50px;
+            border-radius: 25px;
+            margin: 60px 0;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #1a202c;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            border-radius: 2px;
+        }
+
+        .market-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin: 40px 0;
+        }
+
+        .market-stat {
+            text-align: center;
+            padding: 40px 30px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(139, 92, 246, 0.05));
+            border-radius: 20px;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+
+        .market-number {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .market-label {
+            font-size: 1.1rem;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .trends-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 60px 50px;
+            border-radius: 25px;
+            margin: 60px 0;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .trends-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .trend-card {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            padding: 35px;
+            border-radius: 20px;
+            border-left: 5px solid #3b82f6;
+            transition: all 0.3s ease;
+        }
+
+        .trend-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .trend-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 15px;
+        }
+
+        .trend-description {
+            color: #4b5563;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6, #8b5cf6);
+            padding: 80px 50px;
+            border-radius: 30px;
+            text-align: center;
+            margin-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1), transparent),
+                        radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.05), transparent);
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 25px;
+        }
+
+        .cta-text {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 50px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 18px 45px;
+            background: white;
+            color: #1e3a8a;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            background: #f8fafc;
+        }
+
+        @keyframes slideInDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .count-animation {
+            animation: countUp 0.8s ease-out;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .industry-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-stats {
+                gap: 30px;
+            }
+            
+            .market-overview, .trends-section, .cta-section {
+                padding: 40px 25px;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+        }
+
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(59, 130, 246, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">AI Adoption in Industries</h1>
+                <p class="hero-subtitle">Transforming Business Across All Sectors in 2025</p>
+                
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <span class="hero-stat-number" id="global-adoption">0</span>
+                        <div class="hero-stat-label">Global AI Adoption</div>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-number" id="market-value">0</span>
+                        <div class="hero-stat-label">Market Value (Billion $)</div>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-number" id="growth-rate">0</span>
+                        <div class="hero-stat-label">Annual Growth Rate</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Industry Cards Grid -->
+        <div class="industry-grid">
+            <!-- Healthcare -->
+            <div class="industry-card healthcare pulse-animation">
+                <div class="industry-header">
+                    <div class="industry-icon">🏥</div>
+                    <div class="industry-title">Healthcare</div>
+                </div>
+                <div class="adoption-rate">
+                    <div>
+                        <div class="adoption-percentage">78%</div>
+                        <div class="adoption-label">Adoption Rate</div>
+                    </div>
+                </div>
+                <div class="ai-applications">
+                    <div class="applications-title">Key AI Applications:</div>
+                    <div class="application-item">
+                        <div class="app-icon">🔬</div>
+                        <div class="app-text">Medical Diagnosis & Imaging</div>
+                    </div>
+                    <div class="application-item">
+                        <div class="app-icon">💊</div>
+                        <div class="app-text">Drug Discovery & Development</div>
+                    </div>
+                    <div class="application-item">
+                        <div class="app-icon">📊</div>
+                        <div class="app-text">Predictive Analytics</div>
+                    </div>
+                    <div class="application-item">
+                        <div class="app-icon">🤖</div>
+                        <div class="app-text">Robotic Surgery</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Finance -->
+            <div class="industry-card finance">
+                <div class="industry-header">
+                    <div class="industry-icon">🏦</div>
+                    <div class="industry-title">Financial Services</div>
+                </div>
+                <div class="adoption-rate">
+                    <div>
+                        <div class="adoption-percentage">85%</div>
+                        <div class="adoption-label">Adoption Rate</div>
+                    </div>
+                </div>
+                <div class="ai-applications">
+                    <div class="applications-title">Key AI Applications:</div>
+                    <div class="application-item">
+                        <div class="app-icon">🔍</div>
+                        <div class="app-text">Fraud Detection</div>
+                    </div>
+                    <div class="application-item">
+                        <div class="app-icon">📈</div>
+                        <div class="app-text">Algorithmic Trading</div>
+                    </div>
+                    <div class="application-item">
+                        <div class="app-icon">💬</div>
+                        <div class="app-text">Customer Service Chatbots</div>
+                    </div>
+                    <div class="application-item">
+                        <div class="app-icon">⚖️</div>
+                        <div class="app-text">Risk Assessment</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Manufacturing -->
+            <div class="industry-card manufacturing">
+                <div class="industry-header">
+                    <div class="industry-icon">🏭</div>
+                    <div class="industry-title">Manufacturing</div>
+                </div>
+                <div class="adoption-rate">
+                    <div>
+                        <div class="adoption-percentage">72%</div>
+                        <div class="adoption-label">Adoption Rate</div>
+                    </div>
+                </div>
+                <div class="ai-applications">
+                    <div class="applications-title">Key AI Applications:</div>
+                    <div class="application-item">
+                        <div class="app-icon">🔧</div>
+                        <div class="app-text">Predictive Maintenance</div>
+                    </div>
+                    <div class="application-item">
+                        <div class="app-icon">🎯</div>
+                        <div class="app-text">Quality Control</div>
+                    </div>
+                    <div class="application-item">
+                        <div class="app-icon">📦</div>
+                        <div class="app-text">Supply Chain Optimization</div>
+                    </div>
+                    <div class="application-item">
+                        <div class="app-icon">🤖</div>
+                        <div class="app-text">Industrial Automation</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Retail -->
+            <div class="industry-card retail">
+                <div class="industry-header">
+                    <div class="industry-icon">🛍️</div>
+                    <div class="industry-title">Retail & E-commerce</div>
+                </div>
+                <div class="adoption-rate">
+                    <div>
+                        <div class="adoption-percentage">69%</div>
+                        <div class="adoption-label">Adoption Rate</div>
+                    </div>
+                </div>
+                <div class="ai-applications">
+                    <div class="applications-title">Key AI Applications:</div>
+                    <div class="application-item">
+                        <div class="app-icon">🎯</div>
+                        <div class="app-text">Personalized Recommendations</div>
+                    </div>
+                    <div class="application-item">
+                        <div class="app-icon">📊</div>
+                        <div class="app-text">Inventory Management</div>
+                    </div>
+                    <div class="application-item">
+                        <div class="app-icon">💰</div>
+                        <div class="app-text">Dynamic Pricing</div>
+                    </div>
+                    <div class="application-item">
+                        <div class="app-icon">👁️</div>
+                        <div class="app-text">Visual Search</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Automotive -->
+            <div class="industry-card automotive">
+                <div class="industry-header">
+                    <div class="industry-icon">🚗</div>
+                    <div class="industry-title">Automotive</div>
+                </div>
+                <div class="adoption-rate">
+                    <div>
+                        <div class="adoption-percentage">81%</div>
+                        <div class="adoption-label">Adoption Rate</div>
+                    </div>
+                </div>
+                <div class="ai-applications">
+                    <div class="applications-title">Key AI Applications:</div>
+                    <div class="application-item">
+                        <div class="app-icon">🚙</div>
+                        <div class="app-text">Autonomous Driving</div>
+                    </div>
+                    <div class="application-item">
+                        <div class="app-icon">🔧</div>
+                        <div class="app-text">Predictive Maintenance</div>
+                    </div>
+                    <div class="application-item">
+                        <div class="app-icon">🎯</div>
+                        <div class="app-text">Smart Manufacturing</div>
+                    </div>
+                    <div class="application-item">
+                        <div class="app-icon">📱</div>
+                        <div class="app-text">Connected Car Services</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Education -->
+            <div class="industry-card education">
+                <div class="industry-header">
+                    <div class="industry-icon">🎓</div>
+                    <div class="industry-title">Education</div>
+                </div>
+                <div class="adoption-rate">
+                    <div>
+                        <div class="adoption-percentage">54%</div>
+                        <div class="adoption-label">Adoption Rate</div>
+                    </div>
+                </div>
+                <div class="ai-applications">
+                    <div class="applications-title">Key AI Applications:</div>
+                    <div class="application-item">
+                        <div class="app-icon">📚</div>
+                        <div class="app-text">Personalized Learning</div>
+                    </div>
+                    <div class="application-item">
+                        <div class="app-icon">✅</div>
+                        <div class="app-text">Automated Grading</div>
+                    </div>
+                    <div class="application-item">
+                        <div class="app-icon">💬</div>
+                        <div class="app-text">Virtual Tutoring</div>
+                    </div>
+                    <div class="application-item">
+                        <div class="app-icon">📊</div>
+                        <div class="app-text">Learning Analytics</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Market Overview Section -->
+        <div class="market-overview">
+            <h2 class="section-title">Global AI Market Overview</h2>
+            <div class="market-stats">
+                <div class="market-stat">
+                    <div class="market-number" id="market-size">0</div>
+                    <div class="market-label">Market Size (2025)</div>
+                </div>
+                <div class="market-stat">
+                    <div class="market-number" id="projected-growth">0</div>
+                    <div class="market-label">Projected by 2030</div>
+                </div>
+                <div class="market-stat">
+                    <div class="market-number" id="companies-using">0</div>
+                    <div class="market-label">Companies Using AI</div>
+                </div>
+                <div class="market-stat">
+                    <div class="market-number" id="job-creation">0</div>
+                    <div class="market-label">New Jobs Created</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trends Section -->
+        <div class="trends-section">
+            <h2 class="section-title">Key AI Adoption Trends</h2>
+            <div class="trends-grid">
+                <div class="trend-card">
+                    <div class="trend-title">🚀 Rapid Enterprise Integration</div>
+                    <div class="trend-description">Organizations are moving from pilot projects to full-scale AI implementation, with 68% of companies planning to increase AI investments in 2025.</div>
+                </div>
+                <div class="trend-card">
+                    <div class="trend-title">🤝 Human-AI Collaboration</div>
+                    <div class="trend-description">Focus shifting from AI replacement to AI augmentation, enhancing human capabilities rather than substituting them entirely.</div>
+                </div>
+                <div class="trend-card">
+                    <div class="trend-title">🔒 AI Ethics & Governance</div>
+                    <div class="trend-description">Increased emphasis on responsible AI development, with 73% of organizations establishing AI ethics committees and governance frameworks.</div>
+                </div>
+                <div class="trend-card">
+                    <div class="trend-title">🌐 Edge AI Growth</div>
+                    <div class="trend-description">Shift towards edge computing for AI processing, reducing latency and improving data privacy for real-time applications.</div>
+                </div>
+                <div class="trend-card">
+                    <div class="trend-title">📱 Democratization of AI</div>
+                    <div class="trend-description">Low-code/no-code AI platforms making artificial intelligence accessible to non-technical users across all industry sectors.</div>
+                </div>
+                <div class="trend-card">
+                    <div class="trend-title">🌍 Sustainable AI</div>
+                    <div class="trend-description">Growing focus on energy-efficient AI models and green computing practices to reduce environmental impact of AI systems.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="cta-section">
+            <div class="cta-content">
+                <h2 class="cta-title">Ready to Join the AI Revolution?</h2>
+                <p class="cta-text">Don't get left behind. Start your AI transformation journey today and unlock unprecedented growth opportunities for your business.</p>
+                <a href="#" class="cta-button">Explore AI Solutions</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Animated counter function
+        function animateCounter(id, target, suffix = '%', duration = 2000) {
+            const element = document.getElementById(id);
+            if (!element) return;
+            
+            let current = 0;
+            const increment = target / (duration / 16);
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current) + suffix;
+                element.classList.add('count-animation');
+            }, 16);
+        }
+
+        // Initialize animations when page loads
+        window.addEventListener('load', () => {
+            // Hero stats
+            setTimeout(() => animateCounter('global-adoption', 73, '%'), 500);
+            setTimeout(() => animateCounter('market-value', 184, 'B'), 800);
+            setTimeout(() => animateCounter('growth-rate', 37, '%'), 1100);
+
+            // Market stats
+            setTimeout(() => animateCounter('market-size', 184, 'B'), 1500);
+            setTimeout(() => animateCounter('projected-growth', 826, 'B'), 1800);
+            setTimeout(() => animateCounter('companies-using', 87, '%'), 2100);
+            setTimeout(() => animateCounter('job-creation', 97, 'M'), 2400);
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards for scroll animations
+        document.querySelectorAll('.industry-card, .trend-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            observer.observe(card);
+        });
