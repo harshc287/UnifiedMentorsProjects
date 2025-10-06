@@ -1,0 +1,4 @@
+/* Minimal base overrides to work with Bootstrap */
+* { box-sizing: border-box; }
+body { margin: 0; }
+.object-fit-cover { object-fit: cover; }
