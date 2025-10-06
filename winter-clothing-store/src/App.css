@@ -1,0 +1,131 @@
+/* Custom styles for WinterWear e-commerce */
+
+.App {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Product Card Hover Effects */
+.product-card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  border: none;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Navbar Styling */
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Hero Section */
+.carousel-caption {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+/* Button Styling */
+.btn-primary {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-primary:hover {
+  background-color: #0b5ed7;
+  border-color: #0a58ca;
+  transform: translateY(-1px);
+}
+
+/* Card Styling */
+.card {
+  border: none;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.card-img-top {
+  transition: transform 0.3s ease-in-out;
+}
+
+.product-card:hover .card-img-top {
+  transform: scale(1.05);
+}
+
+/* Footer Styling */
+footer {
+  margin-top: auto;
+}
+
+footer a:hover {
+  color: #fff !important;
+  text-decoration: underline !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .carousel-caption h3 {
+    font-size: 1.2rem;
+  }
+  
+  .carousel-caption p {
+    font-size: 0.9rem;
+  }
+}
+
+/* Loading and Animation Effects */
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Custom Badge Colors */
+.badge {
+  font-size: 0.75em;
+}
+
+/* Search Form Styling */
+.navbar .form-control:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Cart Badge */
+.position-relative .badge {
+  font-size: 0.6rem;
+}
+
+/* Product Detail Page */
+.breadcrumb-item.active {
+  color: #6c757d;
+}
+
+/* Alert Styling */
+.alert {
+  border-radius: 10px;
+  border: none;
+}
+
+/* Table Styling */
+.table td {
+  vertical-align: middle;
+  border-color: #dee2e6;
+}
+
+.table img {
+  border-radius: 5px;
+}
